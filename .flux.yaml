@@ -1,0 +1,4 @@
+version: 1
+commandUpdated:
+  generators:
+    - command: "sh -c 'ln -sf /cluster-components && /jk/jk generate --stdout -f components.yaml config.js'"

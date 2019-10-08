@@ -1,0 +1,13 @@
+config:
+  components:
+    - name: wkp-flux-bootstrap
+      params:
+        git:
+          url: git@github.com:weaveworks/wkp-core # GIT URL PLACEHOLDER
+          branch: master # GIT BRANCH PLACEHOLDER
+          deploy_key: # GIT KEY PLACEHOLDER
+        imagePullSecrets:
+          dockerio: # DOCKER.IO PULL SECRET PLACEHOLDER
+        images:
+          clusterComponents: # CLUSTER COMPONENTS IMAGE PLACEHOLDER
+

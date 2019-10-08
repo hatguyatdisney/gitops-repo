@@ -1,0 +1,34 @@
+config:
+  components:
+    - name: wkp-flux-bootstrap
+      params:
+        git:
+          url: git@github.com:weaveworks/wkp-core # GIT URL PLACEHOLDER
+          branch: master # GIT BRANCH PLACEHOLDER
+          deploy_key: # GIT KEY PLACEHOLDER
+        imagePullSecrets:
+          dockerio: # DOCKER.IO PULL SECRET PLACEHOLDER
+        images:
+          clusterComponents: # CLUSTER COMPONENTS IMAGE PLACEHOLDER
+    - name: wkp-flux-helm-operator
+    - name: wkp-tiller
+    - name: wkp-external-dns
+    - name: wkp-prometheus
+      params:
+        ingress:
+          host: example.dev.weave.works
+        endpoints:
+          alertmanager: '/alertmanager/'
+          prometheus: '/prometheus/'
+    - name: wkp-ui
+    - name: wkp-grafana
+      params:
+        ingress:
+          host: example.dev.weave.works
+        endpoints:
+          grafana: '/grafana/'
+        datasources:
+          prometheus:
+            url: http://prometheus-operator-prometheus.wkp-prometheus.svc:9090
+        dashboards-path: ./grafana-dashboards
+
