@@ -1,0 +1,44 @@
+#
+# Move this file to .circle/config.yaml and commit it to
+# your repository to activate policy checking in CircleCI.
+#
+# For more information read the wks user-guide by running:
+#   `wksctl user-guide`
+#
+version: 2
+jobs:
+  policy_check:
+    machine: true
+    steps:
+      - checkout
+      - run:
+          name: Do the policy check
+          command: |
+            # Print out all the commands
+            set -x
+
+            # The branch used to store the cluster state.
+            # Branches will be created off of and merged back into this branch.
+            PRIMARY_BRANCH=master
+
+            # The email of the author of the last commit
+            USER=$(git log --format="%ae" -n1 HEAD)
+            # Current HEAD
+            GITHUB_SHA=$(git rev-parse HEAD)
+            # Branch fork-point w/, returns just last commit if on $PRIMARY_BRANCH.
+            PREVIOUS_COMMIT=$(git merge-base --fork-point "origin/$PRIMARY_BRANCH")
+
+            # image versions
+            WKS_CI_TAG=master-8e7eb027
+            # Use the same image tag as the CI image for now, you can change this if testing out a new version.
+            WKS_CLUSTER_COMPONENTS_TAG="$WKS_CI_TAG"
+
+            echo "$DOCKER_PASS" | docker login --username="$DOCKER_USER" --password-stdin
+            docker run --name=wkp-cc -v $PWD/cluster-components:/target weaveworks/wkp-cluster-components:$WKS_CLUSTER_COMPONENTS_TAG
+            docker run -it -eUSER=$USER -eGITHUB_SHA=$GITHUB_SHA -ePREVIOUS_COMMIT=$PREVIOUS_COMMIT -v $PWD:/var/repo quay.io/wks/wks-ci:$WKS_CI_TAG --output stderr --checks jk --checks policy
+
+workflows:
+  version: 2
+  run_checks:
+    jobs:
+      - policy_check
