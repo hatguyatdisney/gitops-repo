@@ -9,7 +9,7 @@ config:
         imagePullSecrets:
           dockerio: eyJhdXRocyI6eyJkb2NrZXIuaW8iOnsidXNlcm5hbWUiOiJwZmN1cnRpcyIsInBhc3N3b3JkIjoiREtkbjQ0WVAiLCJhdXRoIjoiY0daamRYSjBhWE02UkV0a2JqUTBXVkE9In19fQ== # DOCKER.IO PULL SECRET PLACEHOLDER
         images:
-          clusterComponents: docker.io/weaveworks/wkp-cluster-components:master-6b6df235 # CLUSTER COMPONENTS IMAGE PLACEHOLDER
+          clusterComponents: docker.io/weaveworks/wkp-cluster-components:master-713bc5dc # CLUSTER COMPONENTS IMAGE PLACEHOLDER
     - name: wkp-flux-helm-operator
     - name: wkp-tiller
     - name: wkp-external-dns
